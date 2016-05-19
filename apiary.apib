@@ -1,15 +1,17 @@
-FORMAT: 1A
+ORMAT: 1A
 HOST: http://api.pinnaclesports.com
 
 # Api documentation
 
-Here you can find any website related resource.
+Here you can find all the website related resources
 
 ## Headers
 
 `Content-Type: application/json`
 
 `Authorization: {token}`
+
+`Accept-Language: en-GB`
 
 ## Response Codes
 
@@ -39,18 +41,16 @@ Here you can find any website related resource.
 
 #Group Responsible gaming
 
-## Customer's deposit limit [/customers/{customerId}/deposit-limit]
+## Deposit limit [/deposit-limit]
 
 ### Retrieve customer's deposit limit [GET]
-
-+ Parameters
-    + customerId (string)
 
 + Request
 
     + Headers
          
             Content-Type: application/json
+            Accept-Language: en-GB
             Authorization: {token}  
 
 + Response 200
@@ -58,14 +58,11 @@ Here you can find any website related resource.
     + Body
     
             {
-                "PeriodInHours": 672,
-                "PeriodInDays": 28,
-                "StartDate": "2016-05-19T09:29",
-                "CurrentCycleStartDate": "2016-05-19T09:29",
-                "Amount": 100,
-                "Status": "Active",
-                "AddedBy": "cesarc",
-                "DateAdded":"2016-05-19T09:29"
+              "frequency": "Weekly",
+              "limit": 100,
+              "resetsAt": "20:00 22/04/2016",
+              "timeRemaining": "1 day, 4 hours",
+              "coolOffPeriod": "7 days"
             }
 
 + Response 401
@@ -74,26 +71,21 @@ Here you can find any website related resource.
 
 + Response 500
 
-
 ### Set customer's deposit limit [PUT]
 
-+ Parameters
++ Request(application/json)
 
-    + customerId (string)
-
-+ Request
 
     + Headers
          
-            Content-Type: application/json
+            Accept-Language: en-GB
             Authorization: {token}  
+
     + Body
         
             {
-                "PeriodInHours": 672,
-                "StartDate": "2016-05-19T09:29",
-                "Amount": 100,
-                "AddedBy": "cesarc"
+                "frequency": "Weekly",
+                "limit": 100
             }
 
 + Response 204
@@ -106,10 +98,8 @@ Here you can find any website related resource.
                 "message": "The request is invalid.",
                 "errors": 
                     {
-                        "request.PeriodInHours": ["A positive number is expected"],
-                        "request.StartDate": ["The field is mandatory"],
-                        "request.Amount": ["A positive number is expected"],
-                        "request.AddedBy": ["The field is mandatory"]
+                        "request.frequency": ["The provided frequency is not allowed"],
+                        "request.limit": ["The limit must be a positive number"]
                     }
             }
             
@@ -130,18 +120,14 @@ Here you can find any website related resource.
 
 + Response 500
 
-## Customer's self-exclusion [/customers/{customerId}/self-exclusion]
+## Self-exclusion [/self-exclusion]
 
 ### Retrieve customer's self-exclusion [GET]
-
-+ Parameters
-
-    + customerId (string)
 
 + Request
 
     + Headers
-         
+    
             Content-Type: application/json
             Accept-Language: en-GB
             Authorization: {token}  
@@ -151,13 +137,11 @@ Here you can find any website related resource.
     + Body
     
             {
-                "PeriodInHours": 672,
-                "PeriodInDays": 28,
-                "StartDate": "2016-05-19T09:29",
-                "EndDate": "2016-06-16T09:29",
-                "Status": "Active",
-                "AddedBy": "cesarc",
-                "DateAdded":"2016-05-19T09:29"
+              "period": "EighteenMonths",
+              "limit": 100,
+              "resetsAt": "20:00 22/04/2016",
+              "timeRemaining": "1 day, 4 hours",
+              "coolOffPeriod": "7 days"
             }
 
 + Response 401
@@ -172,11 +156,12 @@ Here you can find any website related resource.
 
     + Headers
          
+            Accept-Language: en-GB
             Authorization: {token}  
     + Body
         
             {
-                "period": 672
+                "period": "EighteenMonths"
             }
 
 + Response 204
@@ -210,19 +195,16 @@ Here you can find any website related resource.
 
 + Response 500
 
-## Customer's cooling-off period [/customers/{customerId}/cooling-off-period]
+## Cooling-off period [/cooling-off]
 
 ### Retrieve customer's cooling-off period [GET]
-
-+ Parameters
-
-    + customerId (string)
 
 + Request
 
     + Headers
          
             Content-Type: application/json
+            Accept-Language: en-GB
             Authorization: {token}  
 
 + Response 200
@@ -230,7 +212,7 @@ Here you can find any website related resource.
     + Body
     
             {
-              "coolingOffPeriodInHours": 24
+              "coolingOffPeriod": "7 days"
             }
 
 + Response 401
@@ -239,4 +221,10 @@ Here you can find any website related resource.
 
 + Response 500
 
-## License's cooling-off period [/licenses/{licenseId}/cooling-off-period]
+#Group Bet list
+
+#Group Statements
+
+#Group Settings
+
+#Group Reports
