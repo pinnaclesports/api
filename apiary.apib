@@ -1,18 +1,15 @@
-ORMAT: 1A
-HOST: http://apix.pinnaclesports.com/profile
+FORMAT: 1A
+HOST: http://api.pinnaclesports.com
 
-# Profile
+# Api documentation
 
-Here you can find all the customer related resources. <br>
-Just make sure you are logged into the website or you have been provided with a valid token. This means that either header or cookie are supported.
+Here you can find any website related resource.
 
 ## Headers
 
 `Content-Type: application/json`
 
 `Authorization: {token}`
-
-`Accept-Language: en-GB`
 
 ## Response Codes
 
@@ -42,16 +39,18 @@ Just make sure you are logged into the website or you have been provided with a 
 
 #Group Responsible gaming
 
-## Deposit limit [/deposit-limit]
+## Customer's deposit limit [/customers/{customerId}/deposit-limit]
 
 ### Retrieve customer's deposit limit [GET]
+
++ Parameters
+    + customerId (string)
 
 + Request
 
     + Headers
          
             Content-Type: application/json
-            Accept-Language: en-GB
             Authorization: {token}  
 
 + Response 200
@@ -59,11 +58,14 @@ Just make sure you are logged into the website or you have been provided with a 
     + Body
     
             {
-              "frequency": "Weekly",
-              "limit": 100,
-              "resetsAt": "20:00 22/04/2016",
-              "timeRemaining": "1 day, 4 hours",
-              "coolOffPeriod": "7 days"
+                "PeriodInHours": 672,
+                "PeriodInDays": 28,
+                "StartDate": "2016-05-19T09:29",
+                "CurrentCycleStartDate": "2016-05-19T09:29",
+                "Amount": 100,
+                "Status": "Active",
+                "AddedBy": "cesarc",
+                "DateAdded":"2016-05-19T09:29"
             }
 
 + Response 401
@@ -72,21 +74,26 @@ Just make sure you are logged into the website or you have been provided with a 
 
 + Response 500
 
+
 ### Set customer's deposit limit [PUT]
 
-+ Request(application/json)
++ Parameters
 
+    + customerId (string)
+
++ Request
 
     + Headers
          
-            Accept-Language: en-GB
+            Content-Type: application/json
             Authorization: {token}  
-
     + Body
         
             {
-                "frequency": "Weekly",
-                "limit": 100
+                "PeriodInHours": 672,
+                "StartDate": "2016-05-19T09:29",
+                "Amount": 100,
+                "AddedBy": "cesarc"
             }
 
 + Response 204
@@ -99,8 +106,10 @@ Just make sure you are logged into the website or you have been provided with a 
                 "message": "The request is invalid.",
                 "errors": 
                     {
-                        "request.frequency": ["The provided frequency is not allowed"],
-                        "request.limit": ["The limit must be a positive number"]
+                        "request.PeriodInHours": ["A positive number is expected"],
+                        "request.StartDate": ["The field is mandatory"],
+                        "request.Amount": ["A positive number is expected"],
+                        "request.AddedBy": ["The field is mandatory"]
                     }
             }
             
@@ -121,14 +130,18 @@ Just make sure you are logged into the website or you have been provided with a 
 
 + Response 500
 
-## Self-exclusion [/self-exclusion]
+## Customer's self-exclusion [/customers/{customerId}/self-exclusion]
 
 ### Retrieve customer's self-exclusion [GET]
+
++ Parameters
+
+    + customerId (string)
 
 + Request
 
     + Headers
-    
+         
             Content-Type: application/json
             Accept-Language: en-GB
             Authorization: {token}  
@@ -138,11 +151,13 @@ Just make sure you are logged into the website or you have been provided with a 
     + Body
     
             {
-              "period": "EighteenMonths",
-              "limit": 100,
-              "resetsAt": "20:00 22/04/2016",
-              "timeRemaining": "1 day, 4 hours",
-              "coolOffPeriod": "7 days"
+                "PeriodInHours": 672,
+                "PeriodInDays": 28,
+                "StartDate": "2016-05-19T09:29",
+                "EndDate": "2016-06-16T09:29",
+                "Status": "Active",
+                "AddedBy": "cesarc",
+                "DateAdded":"2016-05-19T09:29"
             }
 
 + Response 401
@@ -157,12 +172,11 @@ Just make sure you are logged into the website or you have been provided with a 
 
     + Headers
          
-            Accept-Language: en-GB
             Authorization: {token}  
     + Body
         
             {
-                "period": "EighteenMonths"
+                "period": 672
             }
 
 + Response 204
@@ -196,16 +210,19 @@ Just make sure you are logged into the website or you have been provided with a 
 
 + Response 500
 
-## Cooling-off period [/cooling-off]
+## Customer's cooling-off period [/customers/{customerId}/cooling-off-period]
 
 ### Retrieve customer's cooling-off period [GET]
+
++ Parameters
+
+    + customerId (string)
 
 + Request
 
     + Headers
          
             Content-Type: application/json
-            Accept-Language: en-GB
             Authorization: {token}  
 
 + Response 200
@@ -213,7 +230,7 @@ Just make sure you are logged into the website or you have been provided with a 
     + Body
     
             {
-              "coolingOffPeriod": "7 days"
+              "coolingOffPeriodInHours": 24
             }
 
 + Response 401
@@ -222,10 +239,4 @@ Just make sure you are logged into the website or you have been provided with a 
 
 + Response 500
 
-#Group Bet list
-
-#Group Statements
-
-#Group Settings
-
-#Group Reports
+## License's cooling-off period [/licenses/{licenseId}/cooling-off-period]
