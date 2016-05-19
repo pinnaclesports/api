@@ -1,9 +1,9 @@
 ORMAT: 1A
-HOST: http://api.pinnaclesports.com
+HOST: http://api.pinnaclesports.com/responsible-gaming
 
-# Api documentation (Customer)
+# Website
 
-As a logged in customer, you can perform any action on our website.
+Here you can find all website related resources.
 
 ## Headers
 
@@ -45,11 +45,10 @@ As a logged in customer, you can perform any action on our website.
 
 ### Retrieve my deposit limit [GET]
 
-+ Request
++ Request (application/json)
 
     + Headers
          
-            Content-Type: application/json
             Accept-Language: en-GB
             Authorization: {token}  
 
@@ -73,8 +72,7 @@ As a logged in customer, you can perform any action on our website.
 
 ### Set my deposit limit [PUT]
 
-+ Request(application/json)
-
++ Request (application/json)
 
     + Headers
          
@@ -124,15 +122,14 @@ As a logged in customer, you can perform any action on our website.
 
 ### Retrieve my self-exclusion [GET]
 
-+ Request
++ Request (application/json)
 
     + Headers
     
-            Content-Type: application/json
             Accept-Language: en-GB
             Authorization: {token}  
 
-+ Response 200
++ Response 200 (application/json)
 
     + Body
     
@@ -195,7 +192,7 @@ As a logged in customer, you can perform any action on our website.
 
 + Response 500
 
-## Cooling-off period [/cooling-off]
+## Cooling-off period [/responsible-gaming/cooling-off]
 
 ### Retrieve my cooling-off period [GET]
 
