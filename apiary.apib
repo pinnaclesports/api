@@ -1,80 +1,225 @@
-FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
+ORMAT: 1A
+HOST: http://apix.pinnaclesports.com/responsible-gaming/v1
 
 # Profile
 
-Polls is a simple API allowing consumers to view polls and vote in them.
+Here you can find all the customer related resources. 
+Just make sure you are looged into the website.
 
-## Questions Collection [/questions]
+## Headers
 
-### List All Questions [GET]
+`Content-Type: application/json`
 
-+ Response 200 (application/json)
+`Authorization: {token}`
 
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
+`Accept-Language: en-GB`
 
-### Create a New Question [POST]
+## Response Codes
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
+<table> 
+    <tr> 
+        <td>200</td><td nowrap><code>OK</code></td> 
+    </tr> 
+    <tr> 
+        <td>201</td><td nowrap><code>Created</code></td> 
+    </tr> 
+    <tr> 
+        <td>204</td><td nowrap><code>No Content</code></td> 
+    </tr>
+    <tr> 
+        <td>400</td><td nowrap><code>Bad Request</code></td> 
+    </tr> 
+    <tr> 
+        <td>401</td><td nowrap><code>Unauthorized</code></td> 
+    </tr>
+        <tr> 
+        <td>404</td><td nowrap><code>Not found</code></td> 
+    </tr>
+    <tr> 
+        <td>500</td><td nowrap><code>Internal Server Error</code></td> 
+    </tr> 
+</table> 
 
-+ Request (application/json)
+## Deposit limit [/deposit-limit]
 
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
+### Retrieve customer's deposit limit [GET]
 
-+ Response 201 (application/json)
++ Request
 
     + Headers
+         
+            Content-Type: application/json
+            Accept-Language: en-GB
+            Authorization: {token}  
 
-            Location: /questions/2
++ Response 200
 
     + Body
-
+    
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
+              "frequency": "Weekly",
+              "limit": 100,
+              "resetsAt": "20:00 22/04/2016",
+              "timeRemaining": "1 day, 4 hours",
+              "coolOffPeriod": "7 days"
             }
+
++ Response 401
+
++ Response 404
+
++ Response 500
+
+### Set customer's deposit limit [PUT]
+
++ Request(application/json)
+
+
+    + Headers
+         
+            Accept-Language: en-GB
+            Authorization: {token}  
+
+    + Body
+        
+            {
+                "frequency": "Weekly",
+                "limit": 100
+            }
+
++ Response 204
+
++ Response 400 (application/json)
+
+    + Body
+            
+            {
+                "message": "The request is invalid.",
+                "errors": 
+                    {
+                        "request.frequency": ["The provided frequency is not allowed"],
+                        "request.limit": ["The limit must be a positive number"]
+                    }
+            }
+            
++ Response 401
+
++ Response 500
+
+### Disable customer's deposit limit [DELETE]
+
++ Request
+
+    + Headers
+         
+            Authorization: {token}  
+
+
++ Response 204
+
++ Response 500
+
+## Self-exclusion [/self-exclusion]
+
+### Retrieve customer's self-exclusion [GET]
+
++ Request
+
+    + Headers
+         
+            Content-Type: application/json
+            Accept-Language: en-GB
+            Authorization: {token}  
+
++ Response 200
+
+    + Body
+    
+            {
+              "period": "EighteenMonths",
+              "limit": 100,
+              "resetsAt": "20:00 22/04/2016",
+              "timeRemaining": "1 day, 4 hours",
+              "coolOffPeriod": "7 days"
+            }
+
++ Response 401
+
++ Response 404 
+
++ Response 500
+
+### Set customer's self-exclusion [PUT]
+
++ Request(application/json)
+
+
+    + Headers
+         
+            Accept-Language: en-GB
+            Authorization: {token}  
+
+    + Body
+        
+            {
+                "period": "EighteenMonths",
+                "limit": 100
+            }
+
++ Response 204
+
++ Response 400 (application/json)
+
+    + Body
+            
+            {
+                "message": "The request is invalid.",
+                "errors": 
+                    {
+                        "request.period": ["The provided period is not allowed"],
+                        "request.limit": ["The limit must be  a positive number"]
+                    }
+            }
+            
++ Response 401
+
++ Response 500
+
+### Disable customer's self-exclusion [DELETE]
+
++ Request
+
+    + Headers
+         
+            Authorization: {token}  
+
+
++ Response 204
+
++ Response 500
+
+## Cooling-off period [/cooling-off]
+
+### Retrieve customer's cooling-off period [GET]
+
++ Request
+
+    + Headers
+         
+            Content-Type: application/json
+            Accept-Language: en-GB
+            Authorization: {token}  
+
++ Response 200
+
+    + Body
+    
+            {
+              "coolingOffPeriod": "7 days"
+            }
+
++ Response 401
+
++ Response 404
+
++ Response 500
